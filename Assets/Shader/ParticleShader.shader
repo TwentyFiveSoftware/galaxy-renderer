@@ -1,16 +1,19 @@
 ﻿Shader "ParticleShader"
 {
-    Properties {}
+    Properties
+    {
+        _ParticleSize ("Particle Size", Float) = 1
+        _MainTex ("Texture", 2D) = "white" {}
+    }
 
     SubShader
     {
         Pass
         {
-            Blend SrcAlpha one
+            Blend SrcAlpha OneMinusSrcAlpha
+            ZWrite Off
 
             CGPROGRAM
-            #pragma target 5.0
-
             #pragma vertex vert
             #pragma fragment frag
 
@@ -22,26 +25,51 @@
                 float3 velocity;
             };
 
-            struct PixelShaderInput
+            struct v2f
             {
                 float4 position : SV_POSITION;
                 float4 color : COLOR;
+                float2 uv : TEXCOORD0;
             };
 
             StructuredBuffer<Particle> particleBuffer;
 
-            PixelShaderInput vert(uint vertex_id : SV_VertexID, uint instance_id : SV_InstanceID)
-            {
-                PixelShaderInput i;
-                i.position = UnityObjectToClipPos(float4(particleBuffer[instance_id].position, 1.0f));
-                i.color = float4(abs(particleBuffer[instance_id].velocity) * 5, 1.0f);
+            uniform float _ParticleSize;
+            sampler2D _MainTex;
 
-                return i;
+            static const float3 BILLBOARD[] = {
+                float3(-1, -1, 0),
+                float3(1, -1, 0),
+                float3(-1, 1, 0),
+                float3(-1, 1, 0),
+                float3(1, -1, 0),
+                float3(1, 1, 0),
+            };
+
+            static const float2 BILLBOARD_UVS[] = {
+                float2(0, 0),
+                float2(1, 0),
+                float2(0, 1),
+                float2(0, 1),
+                float2(1, 0),
+                float2(1, 1),
+            };
+
+            v2f vert(uint vertex_id : SV_VertexID, uint instance_id : SV_InstanceID)
+            {
+                const float4 screenPos = UnityObjectToClipPos(float4(particleBuffer[instance_id].position, 1.0f));
+
+                v2f o;
+                o.position = float4(BILLBOARD[vertex_id] * _ParticleSize * 0.001, 0) + screenPos;
+                o.uv = BILLBOARD_UVS[vertex_id];
+                o.color = float4(1.0f, 0.45f, 0.0f, 0.1f);
+
+                return o;
             }
 
-            float4 frag(PixelShaderInput i) : COLOR
+            float4 frag(v2f i) : SV_Target
             {
-                return i.color;
+                return tex2D(_MainTex, i.uv) * i.color;
             }
             ENDCG
         }

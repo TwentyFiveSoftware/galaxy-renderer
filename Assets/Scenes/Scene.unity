@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07167e68baf4e14bb6d6d874aa8104b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleCount: 10000000
+  particleCount: 1000000
   particleMaterial: {fileID: 2100000, guid: 99131c0fdb7a6174cbaadf1df5fa8076, type: 2}
   computeShader: {fileID: 7200000, guid: 0c817c5a5a0e4161b37577ade806afc8, type: 3}
 --- !u!23 &344968959

@@ -31,7 +31,7 @@ public class ParticleSystem : MonoBehaviour {
 
         computeShaderKernelID = computeShader.FindKernel("CSMain");
         computeShader.SetBuffer(computeShaderKernelID, "particleBuffer", particleBuffer);
-        
+
         particleMaterial.SetBuffer("particleBuffer", particleBuffer);
     }
 
@@ -46,7 +46,7 @@ public class ParticleSystem : MonoBehaviour {
 
     private void OnRenderObject() {
         particleMaterial.SetPass(0);
-        Graphics.DrawProceduralNow(MeshTopology.Points, 1, particleCount);
+        Graphics.DrawProceduralNow(MeshTopology.Triangles, 6, particleCount);
     }
 
 }
