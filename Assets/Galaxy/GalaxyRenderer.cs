@@ -3,13 +3,12 @@
 public class GalaxyRenderer : MonoBehaviour {
 
     public int starAmount = 1000;
-    public bool useLinearStarDistribution = false;
     public Material galaxyMaterial;
 
     private ComputeBuffer _starBuffer;
 
     private void Start() {
-        Galaxy galaxy = new Galaxy(starAmount, useLinearStarDistribution);
+        Galaxy galaxy = new Galaxy(starAmount);
 
         _starBuffer = new ComputeBuffer(starAmount, sizeof(float) * 10);
         _starBuffer.SetData(galaxy.Stars);
