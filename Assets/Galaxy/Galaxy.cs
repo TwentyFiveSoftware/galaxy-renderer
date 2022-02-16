@@ -50,12 +50,14 @@ public class Galaxy : MonoBehaviour {
                 farFieldFactor * galaxyRadius;
 
             stars[i] = new Star {
-                angularPosition = Random.value * 360.0f * Mathf.Deg2Rad, distanceToCenter = distanceToCenter
+                angularPosition = Random.value * 360.0f * Mathf.Deg2Rad,
+                distanceToCenter = distanceToCenter,
+                color = StarTemperature.CalculateColorFromTemperature(3000.0f + Random.value * 5000.0f)
             };
         }
 
         _starBuffer?.Release();
-        _starBuffer = new ComputeBuffer(starAmount, sizeof(float) * 2);
+        _starBuffer = new ComputeBuffer(starAmount, sizeof(float) * 6);
         _starBuffer.SetData(stars);
 
         UpdateShaderVariables();

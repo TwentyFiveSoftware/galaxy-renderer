@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8b0993b75df41e6bbb6bb2f96f5daa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starAmount: 100000
+  starAmount: 20000
   galaxyMaterial: {fileID: 2100000, guid: c3c4e946a3672a14e86141a9b4871165, type: 2}
   generateGalaxyEveryFrame: 0
   bulgeRadius: 0.25

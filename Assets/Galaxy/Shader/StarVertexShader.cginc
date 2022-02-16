@@ -5,6 +5,7 @@ struct Star
 {
     float angular_position;
     float distance_to_center;
+    float4 color;
 };
 
 struct v2f
@@ -77,6 +78,6 @@ v2f vert(uint vertex_id : SV_VertexID, uint instance_id : SV_InstanceID)
     v2f o;
     o.position = float4(BILLBOARD[vertex_id] * star_size * 0.001f, 0.0f) + screen_pos;
     o.uv = BILLBOARD_UVS[vertex_id];
-    o.color = float4(1.0f, 1.0f, 1.0f, 0.5f);
+    o.color = star.color;
     return o;
 }
