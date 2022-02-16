@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -23,31 +22,12 @@ public class Galaxy {
             new StarDistribution.StarDistributionSettings {
                 bulgeRadius = bulgeRadius,
                 maximumIntensity = 1.0f,
-                bulgeIntensityK = 0.2f,
-                discScaleLength = galaxyRadius / 3.0f
+                starFalloffModifier = galaxyRadius / 10.0f,
+                bulgeIntensity = 0.1f
             };
 
         List<float> intensityProbabilityDistribution =
             StarDistribution.CalculateIntensityProbabilityDistribution(0, 1, 1000, 100.0f, starDistributionSettings);
-
-        // float[] y = new float[10];
-        //
-        // for (int i = 0; i < 10000; i++) {
-        //     float v = StarDistribution.SelectRandomValueBasedOnProbabilityDistribution(
-        //         intensityProbabilityDistribution);
-        //     y[Mathf.FloorToInt(v * 10)] += 1.0f / 10000;
-        // }
-
-        // Debug.Log(intensityProbabilityDistribution.Count);
-        // Debug.Log(String.Join(", ", y));
-
-
-        // float[] e = new float[20];
-        // for (int i = 0; i < 20; i++) {
-        //     e[i] = getEccentricity((i * farFieldRadius) / 20.0f, bulgeRadius, galaxyRadius, farFieldRadius, 0.8f, 1.0f);
-        // }
-        //
-        // Debug.Log(String.Join(", ", e));
 
         for (int i = 0; i < _stars.Length; ++i) {
             float distanceToCenter =
@@ -58,30 +38,12 @@ public class Galaxy {
                 angularPosition = Random.value * 360.0f * Mathf.Deg2Rad,
                 angularVelocity = 0.1f,
                 ellipseTiltAngle = distanceToCenter * ellipseTilt,
-                // ellipseTiltAngle = 0.0f,
-                // ellipseA = 0.0f,
-                // ellipseB = 0.25f,
-                // ellipseA = distanceToCenter * 0.72f,
-                // ellipseB = distanceToCenter * 0.6f,
                 ellipseA = distanceToCenter,
-                // ellipseB = distanceToCenter * 2.0f,
                 ellipseB = distanceToCenter * getEccentricity(distanceToCenter, bulgeRadius, galaxyRadius,
                     farFieldRadius, ellipseA, ellipseB),
                 size = 5.0f,
                 color = new Vector4(1.0f, 1.0f, 1.0f, 0.5f)
             };
-
-            // // VISIBLE ELLIPSES
-            // int ellipseAmount = 30;
-            // _stars[i] = new Star {
-            //     angularPosition = Random.value * 360.0f * Mathf.Deg2Rad,
-            //     angularVelocity = 0.1f,
-            //     ellipseTiltAngle = Mathf.FloorToInt(i / ((float)starAmount / ellipseAmount)) * -0.2f,
-            //     ellipseA = Mathf.FloorToInt(i / ((float)starAmount / ellipseAmount)) * 0.024f,
-            //     ellipseB = Mathf.FloorToInt(i / ((float)starAmount / ellipseAmount)) * -0.02f,
-            //     size = 2.0f,
-            //     color = new Vector4(1.0f, 1.0f, 1.0f, 0.5f)
-            // };
         }
     }
 

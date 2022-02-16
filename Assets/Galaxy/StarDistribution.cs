@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,8 +7,8 @@ public class StarDistribution {
     public struct StarDistributionSettings {
         public float bulgeRadius;
         public float maximumIntensity;
-        public float discScaleLength;
-        public float bulgeIntensityK;
+        public float starFalloffModifier; // lower = less stars further away from disk
+        public float bulgeIntensity; // lower = higher intensity in bulge
     }
 
     public static float SelectRandomValueBasedOnProbabilityDistribution(List<float> distribution) {
@@ -20,32 +19,6 @@ public class StarDistribution {
         float intensityCurveEnd, int approximationSteps, float accuracy,
         StarDistributionSettings distributionSettings) {
         float stepDelta = (intensityCurveEnd - intensityCurveStart) / approximationSteps;
-
-        // float[] cumulativeDistributionFunction = new float[approximationSteps];
-        // cumulativeDistributionFunction[0] = 0.0f;
-        //
-        // float cumulativeY = 0.0f;
-        //
-        // for (int step = 1; step < cumulativeDistributionFunction.Length; ++step) {
-        //     float x = intensityCurveStart + step * stepDelta;
-        //     cumulativeY += CalculateIntensityAtRadius(x, distributionSettings) * stepDelta;
-        //     cumulativeDistributionFunction[step] = cumulativeY;
-        // }
-        //
-        // float maxCumulativeY = cumulativeDistributionFunction[^1];
-        // for (int x = 0; x < cumulativeDistributionFunction.Length; ++x) {
-        //     cumulativeDistributionFunction[x] /= maxCumulativeY;
-        // }
-        //
-        // List<float> values = new List<float>();
-        // for (int step = 1; step < cumulativeDistributionFunction.Length; ++step) {
-        //     float x = intensityCurveStart + step * stepDelta;
-        //     float dy = cumulativeDistributionFunction[step] - cumulativeDistributionFunction[step - 1];
-        //
-        //     for (int i = 0; i < Mathf.CeilToInt(dy * accuracy); ++i) {
-        //         values.Add(x);
-        //     }
-        // }
 
         List<float> values = new List<float>();
 
@@ -66,12 +39,12 @@ public class StarDistribution {
             return CalculateBulgeIntensity(radius, distributionSettings);
 
         return CalculateBulgeIntensity(distributionSettings.bulgeRadius, distributionSettings) *
-               Mathf.Exp(-(radius - distributionSettings.bulgeRadius) / distributionSettings.discScaleLength);
+               Mathf.Exp(-(radius - distributionSettings.bulgeRadius) / distributionSettings.starFalloffModifier);
     }
 
     private static float CalculateBulgeIntensity(float radius, StarDistributionSettings distributionSettings) {
         return distributionSettings.maximumIntensity *
-               Mathf.Exp(-distributionSettings.bulgeIntensityK * Mathf.Pow(radius, 0.25f));
+               Mathf.Exp(-distributionSettings.bulgeIntensity * Mathf.Pow(radius, 0.25f));
     }
 
 }
