@@ -5,6 +5,7 @@ struct Star
 {
     float angular_position;
     float distance_to_center;
+    float size;
     float4 color;
 };
 
@@ -25,7 +26,7 @@ uniform float far_field_factor;
 uniform float ellipse_a;
 uniform float ellipse_b;
 uniform float ellipse_tilt;
-uniform float star_size;
+uniform float star_size_factor;
 uniform float velocity_factor;
 uniform int use_constant_velocity;
 
@@ -43,7 +44,7 @@ float calculate_eccentricity(const float distance_to_center)
     return 1.0f;
 }
 
-float calculate_orbital_velocity(float distance_to_center)
+float calculate_orbital_velocity(const float distance_to_center)
 {
     if (distance_to_center <= 0.0f)
         return 0.0f;
@@ -76,7 +77,7 @@ v2f vert(uint vertex_id : SV_VertexID, uint instance_id : SV_InstanceID)
     const float4 screen_pos = UnityObjectToClipPos(position);
 
     v2f o;
-    o.position = float4(BILLBOARD[vertex_id] * star_size * 0.001f, 0.0f) + screen_pos;
+    o.position = float4(BILLBOARD[vertex_id] * (0.003f * star_size_factor * star.size), 0.0f) + screen_pos;
     o.uv = BILLBOARD_UVS[vertex_id];
     o.color = star.color;
     return o;
