@@ -20,6 +20,7 @@ struct v2f
 };
 
 uniform float time;
+uniform float4 positionOffset;
 StructuredBuffer<Star> starBuffer;
 
 // https://en.wikipedia.org/wiki/Ellipse
@@ -35,8 +36,8 @@ v2f vert(uint vertex_id : SV_VertexID, uint instance_id : SV_InstanceID)
 {
     const Star star = starBuffer[instance_id];
     const float2 starPosition = calculateStarPosition(star);
-
-    const float4 screenPos = UnityObjectToClipPos(float4(starPosition.x, 0.0f, starPosition.y, 1.0f));
+    const float4 position = float4(starPosition.x, 0.0f, starPosition.y, 1.0f) + positionOffset;
+    const float4 screenPos = UnityObjectToClipPos(position);
 
     v2f o;
     o.position = float4(BILLBOARD[vertex_id] * star.size * 0.001, 0) + screenPos;
