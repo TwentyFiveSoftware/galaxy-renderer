@@ -212,6 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   starAmount: 100000
   galaxyMaterial: {fileID: 2100000, guid: c3c4e946a3672a14e86141a9b4871165, type: 2}
+  generateGalaxyEveryFrame: 0
   bulgeRadius: 0.25
   galaxyRadius: 1.2
   farFieldFactor: 1.5
@@ -219,6 +220,8 @@ MonoBehaviour:
   ellipseB: 1
   ellipseTilt: 7
   starSize: 5
+  velocityFactor: 0.25
+  useConstantVelocity: 0
   maximumIntensity: 1
   bulgeIntensity: 0.1
   intensityCurveStart: 0

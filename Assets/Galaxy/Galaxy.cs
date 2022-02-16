@@ -14,7 +14,10 @@ public class Galaxy : MonoBehaviour {
     public float ellipseA = 0.8f;
     public float ellipseB = 1.0f;
     public float ellipseTilt = 7.0f;
+
     public float starSize = 5.0f;
+    public float velocityFactor = 0.25f;
+    public bool useConstantVelocity = false;
 
     public float maximumIntensity = 1.0f;
     public float bulgeIntensity = 0.1f;
@@ -47,14 +50,12 @@ public class Galaxy : MonoBehaviour {
                 farFieldFactor * galaxyRadius;
 
             stars[i] = new Star {
-                angularPosition = Random.value * 360.0f * Mathf.Deg2Rad,
-                angularVelocity = 0.1f,
-                distanceToCenter = distanceToCenter
+                angularPosition = Random.value * 360.0f * Mathf.Deg2Rad, distanceToCenter = distanceToCenter
             };
         }
 
         _starBuffer?.Release();
-        _starBuffer = new ComputeBuffer(starAmount, sizeof(float) * 3);
+        _starBuffer = new ComputeBuffer(starAmount, sizeof(float) * 2);
         _starBuffer.SetData(stars);
 
         UpdateShaderVariables();
@@ -69,6 +70,8 @@ public class Galaxy : MonoBehaviour {
         galaxyMaterial.SetFloat("ellipse_b", ellipseB);
         galaxyMaterial.SetFloat("ellipse_tilt", ellipseTilt);
         galaxyMaterial.SetFloat("star_size", starSize);
+        galaxyMaterial.SetFloat("velocity_factor", velocityFactor);
+        galaxyMaterial.SetInt("use_constant_velocity", useConstantVelocity ? 1 : 0);
         galaxyMaterial.SetFloat("time", Time.time);
         galaxyMaterial.SetVector("position_offset", transform.position);
     }
