@@ -5,6 +5,7 @@ public class Galaxy : MonoBehaviour {
 
     public int starAmount = 60000;
     public int dustAmount = 60000;
+    public int dustFilamentAmount = 60000;
 
     public Material galaxyMaterial;
     public bool generateGalaxyEveryFrame = false;
@@ -18,12 +19,14 @@ public class Galaxy : MonoBehaviour {
     public float ellipseTilt = -8.0f;
 
     public float particleSizeFactor = 1.0f;
-    public float starSizeFactor = 2.0f;
+    public float starSizeFactor = 3.0f;
     public float dustSizeFactor = 300.0f;
+    public float dustFilamentSizeFactor = 1.0f;
 
     public float largerStarFraction = 0.015f;
 
     public float dustTransparency = 0.05f;
+    public float dustFilamentTransparency = 0.07f;
     public float dustTransparencyOffset = 0.06f;
     public float dustBulgeTransparency = 0.015f;
 
@@ -48,7 +51,7 @@ public class Galaxy : MonoBehaviour {
         public float distanceToCenter;
         public float size;
         public Vector4 color;
-        public int type; // 0 = star, 1 = dust
+        public int type; // 0 = star, 1 = dust, 2 = dust filament
     }
 
     private void GenerateGalaxy() {
@@ -64,7 +67,7 @@ public class Galaxy : MonoBehaviour {
             GalaxyParticleDistribution.CalculateIntensityProbabilityDistribution(intensityCurveStart, intensityCurveEnd,
                 intensityApproximationSteps, intensityAccuracy, starDistributionSettings);
 
-        GalaxyParticle[] galaxyParticles = new GalaxyParticle[starAmount + dustAmount];
+        GalaxyParticle[] galaxyParticles = new GalaxyParticle[starAmount + dustAmount + dustFilamentAmount];
 
         for (int i = 0; i < starAmount; ++i) {
             float distanceToCenter =
@@ -100,8 +103,27 @@ public class Galaxy : MonoBehaviour {
             };
         }
 
+        for (int i = 0; i < Mathf.FloorToInt(dustFilamentAmount / 100.0f); ++i) {
+            float distanceToCenter = Random.value * galaxyRadius;
+            float angularPosition = Random.value * 360.0f;
+            float kelvin = Mathf.Min(20000.0f,
+                dustBaseKelvin * Mathf.Exp(distanceToCenter * distanceToCenter * dustKelvinExponent) - 1000.0f);
+
+            for (int j = 0; j < 100; j++) {
+                distanceToCenter = distanceToCenter - 0.05f + 0.1f * Random.value;
+
+                galaxyParticles[starAmount + dustAmount + i * 100 + j] = new GalaxyParticle {
+                    angularPosition = (angularPosition - 10.0f + 20.0f * Random.value) * Mathf.Deg2Rad,
+                    distanceToCenter = distanceToCenter,
+                    size = 0.1f + Random.value * 0.075f,
+                    color = StarTemperature.CalculateColorFromTemperature(kelvin),
+                    type = 2
+                };
+            }
+        }
+
         _galaxyBuffer?.Release();
-        _galaxyBuffer = new ComputeBuffer(starAmount + dustAmount, sizeof(float) * 8);
+        _galaxyBuffer = new ComputeBuffer(starAmount + dustAmount + dustFilamentAmount, sizeof(float) * 8);
         _galaxyBuffer.SetData(galaxyParticles);
 
         UpdateShaderVariables();
@@ -118,7 +140,9 @@ public class Galaxy : MonoBehaviour {
         galaxyMaterial.SetFloat("particle_size_factor", particleSizeFactor);
         galaxyMaterial.SetFloat("star_size_factor", starSizeFactor);
         galaxyMaterial.SetFloat("dust_size_factor", dustSizeFactor);
+        galaxyMaterial.SetFloat("dust_filament_size_factor", dustFilamentSizeFactor);
         galaxyMaterial.SetFloat("dust_transparency", dustTransparency);
+        galaxyMaterial.SetFloat("dust_filament_transparency", dustFilamentTransparency);
         galaxyMaterial.SetFloat("dust_bulge_transparency", dustBulgeTransparency);
         galaxyMaterial.SetFloat("dust_transparency_offset", dustTransparencyOffset);
         galaxyMaterial.SetFloat("velocity_factor", velocityFactor);
@@ -132,7 +156,8 @@ public class Galaxy : MonoBehaviour {
     }
 
     private void Update() {
-        if (generateGalaxyEveryFrame || (_galaxyBuffer != null && (starAmount + dustAmount) != _galaxyBuffer.count))
+        if (generateGalaxyEveryFrame || _galaxyBuffer == null ||
+            starAmount + dustAmount + dustFilamentAmount != _galaxyBuffer.count)
             GenerateGalaxy();
 
         UpdateShaderVariables();
@@ -143,6 +168,9 @@ public class Galaxy : MonoBehaviour {
     }
 
     private void OnRenderObject() {
+        if (_galaxyBuffer == null || _galaxyBuffer.count == 0)
+            return;
+
         galaxyMaterial.SetPass(0);
         Graphics.DrawProceduralNow(MeshTopology.Triangles, 6, _galaxyBuffer.count);
     }
