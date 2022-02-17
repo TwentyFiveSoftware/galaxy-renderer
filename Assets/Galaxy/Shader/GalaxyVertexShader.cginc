@@ -1,13 +1,5 @@
 ﻿#include "UnityCG.cginc"
-#include "TextureConsts.cginc"
-
-struct Star
-{
-    float angular_position;
-    float distance_to_center;
-    float size;
-    float4 color;
-};
+#include "GalaxyParticle.cginc"
 
 struct v2f
 {
@@ -18,7 +10,7 @@ struct v2f
 
 uniform float time;
 uniform float4 position_offset;
-StructuredBuffer<Star> star_buffer;
+StructuredBuffer<GalaxyParticle> galaxy_buffer;
 
 uniform float bulge_radius;
 uniform float galaxy_radius;
@@ -26,7 +18,7 @@ uniform float far_field_factor;
 uniform float ellipse_a;
 uniform float ellipse_b;
 uniform float ellipse_tilt;
-uniform float star_size_factor;
+uniform float particle_size_factor;
 uniform float velocity_factor;
 uniform int use_constant_velocity;
 
@@ -56,13 +48,13 @@ float calculate_orbital_velocity(const float distance_to_center)
     return velocity * velocity_factor / distance_to_center;
 }
 
-float2 calculate_star_position(const Star star)
+float2 calculate_star_position(const GalaxyParticle particle)
 {
-    const float a = star.distance_to_center;
-    const float b = star.distance_to_center * calculate_eccentricity(star.distance_to_center);
-    const float tilt_angle = star.distance_to_center * ellipse_tilt;
+    const float a = particle.distance_to_center;
+    const float b = particle.distance_to_center * calculate_eccentricity(particle.distance_to_center);
+    const float tilt_angle = particle.distance_to_center * ellipse_tilt;
 
-    const float t = star.angular_position + calculate_orbital_velocity(star.distance_to_center) * time;
+    const float t = particle.angular_position + calculate_orbital_velocity(particle.distance_to_center) * time;
     const float2 f1 = a * float2(cos(tilt_angle), sin(tilt_angle));
     const float2 f2 = b * float2(-sin(tilt_angle), cos(tilt_angle));
     return f1 * cos(t) + f2 * sin(t);
@@ -70,15 +62,16 @@ float2 calculate_star_position(const Star star)
 
 v2f vert(uint vertex_id : SV_VertexID, uint instance_id : SV_InstanceID)
 {
-    const Star star = star_buffer[instance_id];
-    const float2 star_position = calculate_star_position(star);
+    const GalaxyParticle particle = galaxy_buffer[instance_id];
+    const float2 particle_position = calculate_star_position(particle);
 
-    const float4 position = float4(star_position.x, 0.0f, star_position.y, 1.0f) + position_offset;
-    const float4 screen_pos = UnityObjectToClipPos(position);
+    const float4 position = float4(particle_position.x, 0.0f, particle_position.y, 1.0f) + position_offset;
+    const float4 screen_position = UnityObjectToClipPos(position);
+    const float4 screen_position_offset = float4(BILLBOARD[vertex_id] * (0.003f * particle_size_factor * particle.size), 0.0f);
 
     v2f o;
-    o.position = float4(BILLBOARD[vertex_id] * (0.003f * star_size_factor * star.size), 0.0f) + screen_pos;
+    o.position = screen_position_offset + screen_position;
     o.uv = BILLBOARD_UVS[vertex_id];
-    o.color = star.color;
+    o.color = particle.color;
     return o;
 }

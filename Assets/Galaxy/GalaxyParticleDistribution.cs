@@ -2,9 +2,9 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class StarDistribution {
+public class GalaxyParticleDistribution {
 
-    public struct StarDistributionSettings {
+    public struct DistributionSettings {
         public float bulgeRadius;
         public float maximumIntensity;
         public float starFalloffModifier; // lower = less stars further away from disk
@@ -17,7 +17,7 @@ public class StarDistribution {
 
     public static List<float> CalculateIntensityProbabilityDistribution(float intensityCurveStart,
         float intensityCurveEnd, int approximationSteps, float accuracy,
-        StarDistributionSettings distributionSettings) {
+        DistributionSettings distributionSettings) {
         float stepDelta = (intensityCurveEnd - intensityCurveStart) / approximationSteps;
 
         List<float> values = new List<float>();
@@ -34,7 +34,7 @@ public class StarDistribution {
         return values;
     }
 
-    private static float CalculateIntensityAtRadius(float radius, StarDistributionSettings distributionSettings) {
+    private static float CalculateIntensityAtRadius(float radius, DistributionSettings distributionSettings) {
         if (radius < distributionSettings.bulgeRadius)
             return CalculateBulgeIntensity(radius, distributionSettings);
 
@@ -42,7 +42,7 @@ public class StarDistribution {
                Mathf.Exp(-(radius - distributionSettings.bulgeRadius) / distributionSettings.starFalloffModifier);
     }
 
-    private static float CalculateBulgeIntensity(float radius, StarDistributionSettings distributionSettings) {
+    private static float CalculateBulgeIntensity(float radius, DistributionSettings distributionSettings) {
         return distributionSettings.maximumIntensity *
                Mathf.Exp(-distributionSettings.bulgeIntensity * Mathf.Pow(radius, 0.25f));
     }

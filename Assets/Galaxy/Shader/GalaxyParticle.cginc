@@ -15,3 +15,12 @@ static const float2 BILLBOARD_UVS[] = {
     float2(1, 0),
     float2(1, 1),
 };
+
+struct GalaxyParticle
+{
+    float angular_position;
+    float distance_to_center;
+    float size;
+    float4 color;
+    int type;
+};

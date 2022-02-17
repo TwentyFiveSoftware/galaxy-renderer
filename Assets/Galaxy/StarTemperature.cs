@@ -2,6 +2,7 @@
 
 public class StarTemperature {
 
+    // https://tannerhelland.com/2012/09/18/convert-temperature-rgb-algorithm-code.html
     public static Vector4 CalculateColorFromTemperature(float kelvin) {
         kelvin = Mathf.Clamp(kelvin, 1000.0f, 40000.0f) / 100.0f;
 

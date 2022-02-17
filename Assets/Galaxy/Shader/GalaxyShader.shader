@@ -16,8 +16,8 @@
             #pragma vertex vert
             #pragma fragment frag
 
-            #include "StarVertexShader.cginc"
-            #include "StarFragmentShader.cginc"
+            #include "GalaxyVertexShader.cginc"
+            #include "GalaxyFragmentShader.cginc"
             ENDCG
         }
     }
