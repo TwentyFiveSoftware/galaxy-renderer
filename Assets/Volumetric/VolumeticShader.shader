@@ -4,6 +4,7 @@
     {
         _MainTex ("Texture", 2D) = "white" {}
     }
+
     SubShader
     {
         Cull Off
@@ -34,6 +35,8 @@
             sampler2D _MainTex;
             sampler2D _CameraDepthTexture;
 
+            sampler3D volumetricTexture;
+
             uniform float3 boxBoundsMin;
             uniform float3 boxBoundsMax;
 
@@ -62,6 +65,20 @@
                 return o;
             }
 
+
+            float4 sampleColorAt(const float3 position)
+            {
+                const float3 uvw = 1 - (boxBoundsMax - position) / (boxBoundsMax - boxBoundsMin);
+                return tex3D(volumetricTexture, uvw);
+                // return float4(uvw, 0.1f);
+            }
+
+            float4 blendColors(float4 a, float4 b)
+            {
+                // return a * b.w + b * (1 - b.w);
+                return a * (1 - b.w) + b * b.w;
+            }
+
             float4 frag(v2f i) : SV_Target
             {
                 float4 color = tex2D(_MainTex, i.uv);
@@ -75,10 +92,21 @@
                 const float distanceToBox = rayBoxInfo.x;
                 const float distanceInsideBox = rayBoxInfo.y;
 
-                const bool rayHitsBox = distanceInsideBox > 0 && distanceToBox < depth;
-                if (rayHitsBox)
+                const int steps = 100;
+                const float epsion = 1.0f / steps;
+                const float stepSize = distanceInsideBox / steps;
+                const float distanceLimit = min(depth - distanceToBox, distanceInsideBox) - epsion;
+
+                for (int step = 0; step < steps; step++)
                 {
-                    color = 0.0f;
+                    const float distanceTravelled = step * stepSize;
+                    if (distanceTravelled < distanceLimit)
+                    {
+                        const float3 rayPosition = rayOrigin + rayDirection * (distanceToBox + distanceLimit - distanceTravelled);
+                        const float4 colorAtPosition = sampleColorAt(rayPosition);
+                        color = blendColors(color, colorAtPosition);
+                        // color = colorAtPosition;
+                    }
                 }
 
                 return color;

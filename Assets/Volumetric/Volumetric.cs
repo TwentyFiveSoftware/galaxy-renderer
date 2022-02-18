@@ -5,6 +5,7 @@ public class Volumetric : MonoBehaviour {
 
     public Shader shader;
     public Transform box;
+    public Texture3D texture;
 
     private Material material;
 
@@ -19,6 +20,7 @@ public class Volumetric : MonoBehaviour {
 
         material.SetVector("boxBoundsMin", box.position - box.localScale / 2.0f);
         material.SetVector("boxBoundsMax", box.position + box.localScale / 2.0f);
+        material.SetTexture("volumetricTexture", texture);
 
         Graphics.Blit(src, dest, material);
     }
