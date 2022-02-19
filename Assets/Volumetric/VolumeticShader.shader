@@ -1,8 +1,6 @@
 ﻿Shader "VolumetricShader"
 {
-    Properties
-    {
-    }
+    Properties {}
 
     SubShader
     {
@@ -30,8 +28,6 @@
                 float2 uv : TEXCOORD0;
                 float3 viewVector : TEXCOORD1;
             };
-
-            sampler2D _CameraDepthTexture;
 
             sampler3D volumetricTexture;
 
@@ -104,27 +100,20 @@
                 float3 rayOrigin = _WorldSpaceCameraPos;
                 float3 rayDirection = normalize(i.viewVector);
 
-                float depth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv)) * length(i.viewVector);
-
                 const float2 rayBoxInfo = calculateRayDistanceToBox(boxBoundsMin, boxBoundsMax, rayOrigin, rayDirection);
                 const float distanceToBox = rayBoxInfo.x;
                 const float distanceInsideBox = rayBoxInfo.y;
 
                 const int steps = 100;
-                const float epsion = 1.0f / steps;
-                const float stepSize = distanceInsideBox / steps;
-                const float distanceLimit = min(depth - distanceToBox, distanceInsideBox) - epsion;
+                const float epsilon = 1.0f / steps;
+                const float stepSize = (distanceInsideBox - epsilon) / steps;
 
                 float4 color = float4(0, 0, 0, 1);
                 for (int step = 0; step < steps; step++)
                 {
-                    const float distanceTravelled = step * stepSize;
-                    if (distanceTravelled < distanceLimit)
-                    {
-                        const float3 rayPosition = rayOrigin + rayDirection * (distanceToBox + distanceLimit - distanceTravelled);
-                        const float4 colorAtPosition = sampleColorAt(rayPosition);
-                        color = blendColors(color, colorAtPosition);
-                    }
+                    const float3 rayPosition = rayOrigin + rayDirection * (distanceToBox + stepSize * (steps - step));
+                    const float4 colorAtPosition = sampleColorAt(rayPosition);
+                    color = blendColors(color, colorAtPosition);
                 }
 
                 return color;
