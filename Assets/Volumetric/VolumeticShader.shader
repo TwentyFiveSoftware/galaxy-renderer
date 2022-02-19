@@ -2,7 +2,6 @@
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
     }
 
     SubShader
@@ -32,13 +31,21 @@
                 float3 viewVector : TEXCOORD1;
             };
 
-            sampler2D _MainTex;
             sampler2D _CameraDepthTexture;
 
             sampler3D volumetricTexture;
 
             uniform float3 boxBoundsMin;
             uniform float3 boxBoundsMax;
+
+            struct Point
+            {
+                float3 position;
+                float radius;
+                float4 color;
+            };
+
+            uniform StructuredBuffer<Point> pointBuffer;
 
 
             float2 calculateRayDistanceToBox(float3 boundsMin, float3 boundsMax, float3 rayOrigin, float3 rayDirection)
@@ -65,24 +72,35 @@
                 return o;
             }
 
+            float4 blendColors(float4 dst, float4 src)
+            {
+                return dst * (1.0f - src.a) + src * src.a;
+            }
 
             float4 sampleColorAt(const float3 position)
             {
-                const float3 uvw = 1 - (boxBoundsMax - position) / (boxBoundsMax - boxBoundsMin);
-                return tex3D(volumetricTexture, uvw);
-                // return float4(uvw, 0.1f);
-            }
+                const float3 normalizedPos = 1 - (boxBoundsMax - position) / (boxBoundsMax - boxBoundsMin);
 
-            float4 blendColors(float4 a, float4 b)
-            {
-                // return a * b.w + b * (1 - b.w);
-                return a * (1 - b.w) + b * b.w;
+                float4 color = float4(0, 0, 0, 0);
+
+                const uint points = 100;
+                for (uint i = 0; i < points; i++)
+                {
+                    const Point p = pointBuffer[i];
+                    const float3 vectorToPoint = p.position - normalizedPos;
+
+                    if (length(vectorToPoint) < p.radius)
+                    {
+                        const float4 pointColor = float4(p.color.rgb, 1.0f - length(vectorToPoint) / p.radius);
+                        color = blendColors(color, pointColor);
+                    }
+                }
+
+                return color;
             }
 
             float4 frag(v2f i) : SV_Target
             {
-                float4 color = tex2D(_MainTex, i.uv);
-
                 float3 rayOrigin = _WorldSpaceCameraPos;
                 float3 rayDirection = normalize(i.viewVector);
 
@@ -97,6 +115,7 @@
                 const float stepSize = distanceInsideBox / steps;
                 const float distanceLimit = min(depth - distanceToBox, distanceInsideBox) - epsion;
 
+                float4 color = float4(0, 0, 0, 1);
                 for (int step = 0; step < steps; step++)
                 {
                     const float distanceTravelled = step * stepSize;
@@ -105,7 +124,6 @@
                         const float3 rayPosition = rayOrigin + rayDirection * (distanceToBox + distanceLimit - distanceTravelled);
                         const float4 colorAtPosition = sampleColorAt(rayPosition);
                         color = blendColors(color, colorAtPosition);
-                        // color = colorAtPosition;
                     }
                 }
 

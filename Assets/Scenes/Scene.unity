@@ -391,7 +391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &371486642
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -614,7 +614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: 2faeadf61c594d6cb0754b4daa0853a0, type: 3}
   box: {fileID: 709932665}
-  texture: {fileID: 11700000, guid: d8b1559c39968d04488cfd9329cfe987, type: 2}
+  computeShader: {fileID: 7200000, guid: 4432875dd9114932ac3c99dcbf96c4c8, type: 3}
 --- !u!1 &1330811871
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,7 +633,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &1330811872
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -730,7 +730,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1780971186
 BoxCollider:
   m_ObjectHideFlags: 0
