@@ -1,18 +1,14 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Experimental.Rendering;
-using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 
 [ExecuteInEditMode, ImageEffectAllowedInSceneView]
 public class Volumetric : MonoBehaviour {
 
-    public Shader shader;
-    public Transform box;
+    public ComputeShader computeShader;
 
-    private Material material;
     private ComputeBuffer pointsBuffer;
-    private RenderTexture texture;
+    private RenderTexture renderTexture;
 
     struct Point {
         public Vector3 position;
@@ -21,14 +17,14 @@ public class Volumetric : MonoBehaviour {
     };
 
     private void OnEnable() {
-        GetComponent<Camera>().depthTextureMode = DepthTextureMode.Depth;
+        GetComponent<Camera>().depthTextureMode = DepthTextureMode.None;
 
-        Point[] points = new Point[100];
+        Point[] points = new Point[10000];
         for (int i = 0; i < points.Length; i++) {
-            points[i] = new Point() {
+            points[i] = new Point {
                 position = new Vector3(Random.value, Random.value, Random.value),
                 radius = 0.005f + Random.value * 0.02f,
-                color = new Vector4(1.0f, 0.7f, 0.0f, 0.5f)
+                color = new Vector4(1.0f, 0.7f, 0.0f, 1)
             };
         }
 
@@ -42,16 +38,27 @@ public class Volumetric : MonoBehaviour {
     }
 
     private void OnRenderImage(RenderTexture src, RenderTexture dest) {
-        if (material == null) {
-            material = new Material(shader);
+        if (renderTexture == null) {
+            renderTexture = new RenderTexture(src.width, src.height, 0, GraphicsFormat.R8G8B8A8_UNorm);
+            renderTexture.enableRandomWrite = true;
+            renderTexture.Create();
         }
 
-        material.SetVector("boxBoundsMin", box.position - box.localScale / 2.0f);
-        material.SetVector("boxBoundsMax", box.position + box.localScale / 2.0f);
-        material.SetBuffer("pointBuffer", pointsBuffer);
-        material.SetTexture("volumetricTexture", texture);
+        int kernelIndex = computeShader.FindKernel("CSMain");
 
-        Graphics.Blit(src, dest, material);
+        computeShader.SetBuffer(kernelIndex, "pointBuffer", pointsBuffer);
+        computeShader.SetTexture(kernelIndex, "renderTexture", renderTexture);
+
+        int yDispatchCount = 50;
+        int xGroups = Mathf.CeilToInt(renderTexture.width / 8.0f);
+        int yGroups = Mathf.CeilToInt((renderTexture.height / 8.0f) / yDispatchCount);
+        
+        for (int y = 0; y < yDispatchCount; y++) {
+            computeShader.SetInt("yPixelOffset", (yGroups * y) * 8);
+            computeShader.Dispatch(kernelIndex, xGroups, yGroups, 1);
+        }
+        
+        Graphics.Blit(renderTexture, dest);
     }
 
 }

@@ -1,0 +1,81 @@
+﻿#pragma kernel CSMain
+
+struct Point
+{
+    float3 position;
+    float radius;
+    float4 color;
+};
+
+StructuredBuffer<Point> pointBuffer;
+RWTexture2D<float4> renderTexture;
+int yPixelOffset;
+
+#include "UnityCG.cginc"
+
+
+float4 blendColors(float4 dst, float4 src)
+{
+    return dst * (1.0f - src.a) + src * src.a;
+}
+
+float4 sampleColorAt(const float3 position)
+{
+    const float3 boundsMin = float3(0, 0, 0);
+    const float3 boundsMax = float3(1, 1, 1);
+
+    if (position.x < boundsMin.x || position.x > boundsMax.x ||
+        position.y < boundsMin.y || position.y > boundsMax.y ||
+        position.z < boundsMin.z || position.z > boundsMax.z)
+    {
+        return float4(0, 0, 0, 0);
+    }
+
+    float4 color = float4(0, 0, 0, 0);
+
+
+    const uint points = 1000;
+    for (uint i = 0; i < points; i++)
+    {
+        const Point p = pointBuffer[i];
+        const float3 vectorToPoint = p.position - position;
+
+        if (length(vectorToPoint) < p.radius)
+        {
+            const float4 pointColor = float4(p.color.rgb, p.color.a * (1.0f - length(vectorToPoint) / p.radius));
+            color = blendColors(color, pointColor);
+        }
+    }
+
+    return color;
+}
+
+[numthreads(8,8,1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    const uint2 pixel = uint2(id.x, id.y + yPixelOffset);
+
+    float2 dimensions;
+    renderTexture.GetDimensions(dimensions.x, dimensions.y);
+    const float2 uv = pixel / dimensions;
+
+    const float3 cameraViewDirection = normalize(mul(
+        unity_CameraToWorld, float4(mul(unity_CameraInvProjection, float4(uv * 2 - 1, 0, -1)).xyz, 0)).xyz);
+
+
+    float4 color = float4(0, 0, 0, 1);
+
+    const float stepSize = 0.01f;
+    const float maxDistance = 3.0f;
+
+    float distance = 0.0f;
+    while (distance < maxDistance)
+    {
+        const float3 rayPosition = _WorldSpaceCameraPos + cameraViewDirection * (maxDistance - distance);
+        const float4 colorAtPosition = sampleColorAt(rayPosition);
+        color = blendColors(color, colorAtPosition);
+        distance += stepSize;
+    }
+
+    renderTexture[pixel] = color;
+}
