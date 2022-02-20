@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class Galaxy : MonoBehaviour {
@@ -86,9 +87,8 @@ public class Galaxy : MonoBehaviour {
         }
 
         for (int i = 0; i < dustAmount; ++i) {
-            float distanceToCenter = i % 2 == 0
-                ? Random.value * galaxyRadius
-                : GalaxyParticleDistribution.SelectRandomValueBasedOnProbabilityDistribution(
+            float distanceToCenter =
+                GalaxyParticleDistribution.SelectRandomValueBasedOnProbabilityDistribution(
                     intensityProbabilityDistribution) * farFieldFactor * galaxyRadius;
 
             float kelvin = Mathf.Min(20000.0f,
@@ -107,7 +107,7 @@ public class Galaxy : MonoBehaviour {
             float distanceToCenter = Random.value * galaxyRadius;
             float angularPosition = Random.value * 360.0f;
             float kelvin = Mathf.Min(20000.0f,
-                dustBaseKelvin * Mathf.Exp(distanceToCenter * distanceToCenter * dustKelvinExponent) - 1000.0f);
+                dustBaseKelvin * Mathf.Exp(distanceToCenter * distanceToCenter * dustKelvinExponent));
 
             for (int j = 0; j < 100; j++) {
                 distanceToCenter = distanceToCenter - 0.05f + 0.1f * Random.value;

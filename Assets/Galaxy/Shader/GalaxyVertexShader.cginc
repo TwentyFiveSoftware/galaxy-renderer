@@ -81,21 +81,22 @@ v2f vert(uint vertex_id : SV_VertexID, uint instance_id : SV_InstanceID)
 
 
     float alpha = 1.0f;
-
+    
     if (particle.type == 1 || particle.type == 2)
     {
-        if (particle.distance_to_center < bulge_radius)
-            alpha = dust_bulge_transparency;
-        else
+        // if (particle.distance_to_center < bulge_radius)
+        //     alpha = dust_bulge_transparency;
+        // else
             alpha = (particle.type == 1 ? dust_transparency : dust_filament_transparency) *
                 sin(UNITY_PI / (galaxy_radius * 0.9f - bulge_radius) * (particle.distance_to_center - bulge_radius + dust_transparency_offset));
-
+    
         alpha = max(alpha, 0.0f);
     }
 
     v2f o;
     o.position = screen_position_offset + screen_position;
     o.uv = BILLBOARD_UVS[vertex_id];
-    o.color = float4((particle.color * particle.size).xyz, alpha);
+    o.color = float4(particle.color.rgb, alpha);
+    // o.color = float4((particle.color * particle.size).xyz, alpha);
     return o;
 }

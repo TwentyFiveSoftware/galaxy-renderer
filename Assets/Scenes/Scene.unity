@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 337299178}
   - component: {fileID: 337299179}
+  - component: {fileID: 337299185}
   - component: {fileID: 337299184}
   - component: {fileID: 337299183}
   m_Layer: 0
@@ -141,7 +142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &337299178
 Transform:
   m_ObjectHideFlags: 0
@@ -248,14 +249,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 337299177}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8b0993b75df41e6bbb6bb2f96f5daa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starAmount: 60000
+  starAmount: 0
   dustAmount: 60000
-  dustFilamentAmount: 60000
+  dustFilamentAmount: 0
   galaxyMaterial: {fileID: 2100000, guid: c3c4e946a3672a14e86141a9b4871165, type: 2}
   generateGalaxyEveryFrame: 0
   bulgeRadius: 0.1
@@ -275,6 +276,48 @@ MonoBehaviour:
   dustBulgeTransparency: 0.01
   dustBaseKelvin: 4000
   dustKelvinExponent: 3
+  velocityFactor: 0.25
+  useConstantVelocity: 0
+  maximumIntensity: 1
+  bulgeIntensity: 0.02
+  intensityCurveStart: 0
+  intensityCurveEnd: 1
+  intensityApproximationSteps: 1000
+  intensityAccuracy: 100
+--- !u!114 &337299185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337299177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b0993b75df41e6bbb6bb2f96f5daa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  starAmount: 60000
+  dustAmount: 60000
+  dustFilamentAmount: 60000
+  galaxyMaterial: {fileID: 2100000, guid: c3c4e946a3672a14e86141a9b4871165, type: 2}
+  generateGalaxyEveryFrame: 0
+  bulgeRadius: 0.1
+  galaxyRadius: 1
+  farFieldFactor: 1.5
+  ellipseA: 0.8
+  ellipseB: 1
+  ellipseTilt: -9
+  particleSizeFactor: 1
+  starSizeFactor: 3.5
+  dustSizeFactor: 100
+  dustFilamentSizeFactor: 200
+  largerStarFraction: 0.015
+  dustTransparency: 0.07
+  dustFilamentTransparency: 0.02
+  dustTransparencyOffset: 0.02
+  dustBulgeTransparency: 0.001
+  dustBaseKelvin: 4500
+  dustKelvinExponent: 1.8
   velocityFactor: 0.25
   useConstantVelocity: 0
   maximumIntensity: 1
@@ -531,7 +574,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &732979811
 Transform:
   m_ObjectHideFlags: 0
@@ -652,7 +695,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 542f29d816bf4c0a9ba06ef92291d198, type: 3}
   m_Name: 
