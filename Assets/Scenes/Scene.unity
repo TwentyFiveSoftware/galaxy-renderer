@@ -303,18 +303,18 @@ MonoBehaviour:
   generateGalaxyEveryFrame: 0
   bulgeRadius: 0.1
   galaxyRadius: 1
-  farFieldFactor: 1.5
-  ellipseA: 0.8
-  ellipseB: 1
+  farFieldFactor: 1
+  ellipseA: 0.64
+  ellipseB: 1.23
   ellipseTilt: -9
   particleSizeFactor: 1
   starSizeFactor: 3.5
-  dustSizeFactor: 100
+  dustSizeFactor: 30
   dustFilamentSizeFactor: 200
   largerStarFraction: 0.015
   dustTransparency: 0.07
-  dustFilamentTransparency: 0.02
-  dustTransparencyOffset: 0.02
+  dustFilamentTransparency: 0.01
+  dustTransparencyOffset: 0.18
   dustBulgeTransparency: 0.001
   dustBaseKelvin: 4500
   dustKelvinExponent: 1.8
@@ -681,7 +681,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: -0.32245493, y: -0.23345803, z: 0.08248866, w: -0.91362786}
-  m_LocalPosition: {x: -0.6588886, y: 1.0328411, z: -1.2794642}
+  m_LocalPosition: {x: -0.55, y: 0.849, z: -1.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

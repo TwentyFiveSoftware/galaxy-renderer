@@ -51,6 +51,7 @@ public class Galaxy : MonoBehaviour {
         public float angularPosition;
         public float distanceToCenter;
         public float size;
+        public float yOffset;
         public Vector4 color;
         public int type; // 0 = star, 1 = dust, 2 = dust filament
     }
@@ -77,11 +78,16 @@ public class Galaxy : MonoBehaviour {
 
             float size = 0.1f + Random.value * 0.4f;
 
+            float yOffset =
+                GalaxyParticleDistribution.SelectRandomValueBasedOnProbabilityDistribution(
+                    intensityProbabilityDistribution) * 0.1f * (i % 2 == 0 ? 1 : -1);
+
             galaxyParticles[i] = new GalaxyParticle {
                 angularPosition = Random.value * 360.0f * Mathf.Deg2Rad,
                 distanceToCenter = distanceToCenter,
                 color = StarTemperature.CalculateColorFromTemperature(3000.0f + Random.value * 5000.0f),
                 size = i < starAmount * largerStarFraction ? 2 * size : size,
+                yOffset = yOffset,
                 type = 0
             };
         }
@@ -94,11 +100,16 @@ public class Galaxy : MonoBehaviour {
             float kelvin = Mathf.Min(20000.0f,
                 dustBaseKelvin * Mathf.Exp(distanceToCenter * distanceToCenter * dustKelvinExponent));
 
+            float yOffset =
+                GalaxyParticleDistribution.SelectRandomValueBasedOnProbabilityDistribution(
+                    intensityProbabilityDistribution) * 0.1f * (i % 2 == 0 ? 1 : -1);
+
             galaxyParticles[starAmount + i] = new GalaxyParticle {
                 angularPosition = Random.value * 360.0f * Mathf.Deg2Rad,
                 distanceToCenter = distanceToCenter,
                 size = 0.02f + Random.value * 0.15f,
                 color = StarTemperature.CalculateColorFromTemperature(kelvin),
+                yOffset = yOffset,
                 type = 1
             };
         }
@@ -109,6 +120,10 @@ public class Galaxy : MonoBehaviour {
             float kelvin = Mathf.Min(20000.0f,
                 dustBaseKelvin * Mathf.Exp(distanceToCenter * distanceToCenter * dustKelvinExponent));
 
+            float yOffset =
+                GalaxyParticleDistribution.SelectRandomValueBasedOnProbabilityDistribution(
+                    intensityProbabilityDistribution) * 0.1f * (i % 2 == 0 ? 1 : -1);
+
             for (int j = 0; j < 100; j++) {
                 distanceToCenter = distanceToCenter - 0.05f + 0.1f * Random.value;
 
@@ -117,13 +132,14 @@ public class Galaxy : MonoBehaviour {
                     distanceToCenter = distanceToCenter,
                     size = 0.1f + Random.value * 0.075f,
                     color = StarTemperature.CalculateColorFromTemperature(kelvin),
+                    yOffset = yOffset,
                     type = 2
                 };
             }
         }
 
         _galaxyBuffer?.Release();
-        _galaxyBuffer = new ComputeBuffer(starAmount + dustAmount + dustFilamentAmount, sizeof(float) * 8);
+        _galaxyBuffer = new ComputeBuffer(starAmount + dustAmount + dustFilamentAmount, sizeof(float) * 9);
         _galaxyBuffer.SetData(galaxyParticles);
 
         UpdateShaderVariables();

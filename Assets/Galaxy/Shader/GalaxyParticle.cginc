@@ -21,6 +21,7 @@ struct GalaxyParticle
     float angular_position;
     float distance_to_center;
     float size;
+    float yOffset;
     float4 color;
     int type;
 };

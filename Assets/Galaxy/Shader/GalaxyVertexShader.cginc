@@ -75,7 +75,7 @@ v2f vert(uint vertex_id : SV_VertexID, uint instance_id : SV_InstanceID)
     const float size = particle.size * particle_size_factor *
         (particle.type == 0 ? star_size_factor : particle.type == 1 ? dust_size_factor : particle.type == 2 ? dust_filament_size_factor : 1.0f);
 
-    const float4 position = float4(particle_position.x, 0.0f, particle_position.y, 1.0f) + position_offset;
+    const float4 position = float4(particle_position.x, particle.yOffset, particle_position.y, 1.0f) + position_offset;
     const float4 screen_position = UnityObjectToClipPos(position);
     const float4 screen_position_offset = float4(BILLBOARD[vertex_id] * (0.003f * size), 0.0f);
 
