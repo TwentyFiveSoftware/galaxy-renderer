@@ -77,10 +77,7 @@ public class Galaxy : MonoBehaviour {
                     intensityProbabilityDistribution) * farFieldFactor * galaxyRadius;
 
             float size = 0.1f + Random.value * 0.4f;
-
-            float yOffset =
-                GalaxyParticleDistribution.SelectRandomValueBasedOnProbabilityDistribution(
-                    intensityProbabilityDistribution) * 0.1f * (i % 2 == 0 ? 1 : -1);
+            float yOffset = Random.value * 0.05f;
 
             galaxyParticles[i] = new GalaxyParticle {
                 angularPosition = Random.value * 360.0f * Mathf.Deg2Rad,
@@ -100,9 +97,7 @@ public class Galaxy : MonoBehaviour {
             float kelvin = Mathf.Min(20000.0f,
                 dustBaseKelvin * Mathf.Exp(distanceToCenter * distanceToCenter * dustKelvinExponent));
 
-            float yOffset =
-                GalaxyParticleDistribution.SelectRandomValueBasedOnProbabilityDistribution(
-                    intensityProbabilityDistribution) * 0.1f * (i % 2 == 0 ? 1 : -1);
+            float yOffset = Random.value * 0.05f;
 
             galaxyParticles[starAmount + i] = new GalaxyParticle {
                 angularPosition = Random.value * 360.0f * Mathf.Deg2Rad,
@@ -120,9 +115,7 @@ public class Galaxy : MonoBehaviour {
             float kelvin = Mathf.Min(20000.0f,
                 dustBaseKelvin * Mathf.Exp(distanceToCenter * distanceToCenter * dustKelvinExponent));
 
-            float yOffset =
-                GalaxyParticleDistribution.SelectRandomValueBasedOnProbabilityDistribution(
-                    intensityProbabilityDistribution) * 0.1f * (i % 2 == 0 ? 1 : -1);
+            float yOffset = Random.value * 0.05f;
 
             for (int j = 0; j < 100; j++) {
                 distanceToCenter = distanceToCenter - 0.05f + 0.1f * Random.value;
