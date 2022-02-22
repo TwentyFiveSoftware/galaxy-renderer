@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
+[ExecuteInEditMode, ImageEffectAllowedInSceneView]
 public class Galaxy : MonoBehaviour {
 
     public int starAmount = 60000;
@@ -158,6 +158,10 @@ public class Galaxy : MonoBehaviour {
         galaxyMaterial.SetInt("use_constant_velocity", useConstantVelocity ? 1 : 0);
         galaxyMaterial.SetFloat("time", Time.time);
         galaxyMaterial.SetVector("position_offset", transform.position);
+    }
+
+    private void OnEnable() {
+        GenerateGalaxy();
     }
 
     private void Start() {

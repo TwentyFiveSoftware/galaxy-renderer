@@ -134,8 +134,7 @@ GameObject:
   - component: {fileID: 337299178}
   - component: {fileID: 337299179}
   - component: {fileID: 337299185}
-  - component: {fileID: 337299184}
-  - component: {fileID: 337299183}
+  - component: {fileID: 337299186}
   m_Layer: 0
   m_Name: Galaxy
   m_TagString: Untagged
@@ -200,90 +199,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &337299183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 337299177}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8b0993b75df41e6bbb6bb2f96f5daa8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  starAmount: 60000
-  dustAmount: 60000
-  dustFilamentAmount: 60000
-  galaxyMaterial: {fileID: 2100000, guid: c3c4e946a3672a14e86141a9b4871165, type: 2}
-  generateGalaxyEveryFrame: 0
-  bulgeRadius: 0.1
-  galaxyRadius: 1
-  farFieldFactor: 1.5
-  ellipseA: 0.85
-  ellipseB: 1
-  ellipseTilt: -8
-  particleSizeFactor: 1
-  starSizeFactor: 3
-  dustSizeFactor: 300
-  dustFilamentSizeFactor: 100
-  largerStarFraction: 0.015
-  dustTransparency: 0.05
-  dustFilamentTransparency: 0.07
-  dustTransparencyOffset: 0.055
-  dustBulgeTransparency: 0.01
-  dustBaseKelvin: 4000
-  dustKelvinExponent: 3
-  velocityFactor: 0.25
-  useConstantVelocity: 0
-  maximumIntensity: 1
-  bulgeIntensity: 0.02
-  intensityCurveStart: 0
-  intensityCurveEnd: 1
-  intensityApproximationSteps: 1000
-  intensityAccuracy: 100
---- !u!114 &337299184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 337299177}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8b0993b75df41e6bbb6bb2f96f5daa8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  starAmount: 0
-  dustAmount: 60000
-  dustFilamentAmount: 0
-  galaxyMaterial: {fileID: 2100000, guid: c3c4e946a3672a14e86141a9b4871165, type: 2}
-  generateGalaxyEveryFrame: 0
-  bulgeRadius: 0.1
-  galaxyRadius: 1
-  farFieldFactor: 1.5
-  ellipseA: 0.8
-  ellipseB: 1
-  ellipseTilt: -9
-  particleSizeFactor: 1
-  starSizeFactor: 3.5
-  dustSizeFactor: 250
-  dustFilamentSizeFactor: 200
-  largerStarFraction: 0.015
-  dustTransparency: 0.05
-  dustFilamentTransparency: 0.02
-  dustTransparencyOffset: 0.07
-  dustBulgeTransparency: 0.01
-  dustBaseKelvin: 4000
-  dustKelvinExponent: 3
-  velocityFactor: 0.25
-  useConstantVelocity: 0
-  maximumIntensity: 1
-  bulgeIntensity: 0.02
-  intensityCurveStart: 0
-  intensityCurveEnd: 1
-  intensityApproximationSteps: 1000
-  intensityAccuracy: 100
 --- !u!114 &337299185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +207,48 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 337299177}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b0993b75df41e6bbb6bb2f96f5daa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  starAmount: 60000
+  dustAmount: 0
+  dustFilamentAmount: 0
+  galaxyMaterial: {fileID: 2100000, guid: c3c4e946a3672a14e86141a9b4871165, type: 2}
+  generateGalaxyEveryFrame: 0
+  bulgeRadius: 0.1
+  galaxyRadius: 1
+  farFieldFactor: 1
+  ellipseA: 0.64
+  ellipseB: 1.23
+  ellipseTilt: -9
+  particleSizeFactor: 1
+  starSizeFactor: 3.5
+  dustSizeFactor: 30
+  dustFilamentSizeFactor: 200
+  largerStarFraction: 0.015
+  dustTransparency: 0.07
+  dustFilamentTransparency: 0.01
+  dustTransparencyOffset: 0.18
+  dustBulgeTransparency: 0.001
+  dustBaseKelvin: 4500
+  dustKelvinExponent: 1.8
+  velocityFactor: 0
+  useConstantVelocity: 0
+  maximumIntensity: 1
+  bulgeIntensity: 0.02
+  intensityCurveStart: 0
+  intensityCurveEnd: 1
+  intensityApproximationSteps: 1000
+  intensityAccuracy: 100
+--- !u!114 &337299186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337299177}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8b0993b75df41e6bbb6bb2f96f5daa8, type: 3}
   m_Name: 
@@ -695,12 +652,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 542f29d816bf4c0a9ba06ef92291d198, type: 3}
+  m_Script: {fileID: 11500000, guid: 92f0f7dad43f4fbc8a956c6e7d1f63a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  computeShader: {fileID: 7200000, guid: 7f319d83e17d45b285d042076e35d1f5, type: 3}
+  bloomShader: {fileID: 4800000, guid: 1a7766cc519a45c8ac160d074a635406, type: 3}
+  intensity: 0.72
+  threshold: 1
+  softThreshold: 0.5
+  iterations: 6
 --- !u!1 &1330811871
 GameObject:
   m_ObjectHideFlags: 0
