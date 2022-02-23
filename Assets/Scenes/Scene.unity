@@ -224,6 +224,8 @@ MonoBehaviour:
   ellipseA: 0.85
   ellipseB: 1
   ellipseTilt: -8
+  ellipseDisturbanceNumber: 3.5
+  ellipseDisturbanceDampingFactor: 70
   particleSizeFactor: 1
   starSizeFactor: 3.5
   dustSizeFactor: 30
@@ -234,7 +236,7 @@ MonoBehaviour:
   dustTransparencyCurveFactor: 0.92
   dustBaseKelvin: 4500
   dustKelvinExponent: 1.8
-  velocityFactor: 0.25
+  velocityFactor: 0
   useConstantVelocity: 0
   maximumIntensity: 70
   bulgeIntensity: 7
@@ -266,6 +268,8 @@ MonoBehaviour:
   ellipseA: 0.64
   ellipseB: 1.23
   ellipseTilt: -9
+  ellipseDisturbanceNumber: 0
+  ellipseDisturbanceDampingFactor: 0
   particleSizeFactor: 1
   starSizeFactor: 3.5
   dustSizeFactor: 30
@@ -308,6 +312,8 @@ MonoBehaviour:
   ellipseA: 0.85
   ellipseB: 1
   ellipseTilt: -8
+  ellipseDisturbanceNumber: 0
+  ellipseDisturbanceDampingFactor: 0
   particleSizeFactor: 1
   starSizeFactor: 3.5
   dustSizeFactor: 30

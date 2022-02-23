@@ -21,6 +21,9 @@ public class Galaxy : MonoBehaviour {
     public float ellipseB = 1.0f;
     public float ellipseTilt = -8.0f;
 
+    public float ellipseDisturbanceNumber = 0.0f;
+    public float ellipseDisturbanceDampingFactor = 0.0f;
+
     public float particleSizeFactor = 1.0f;
     public float starSizeFactor = 3.0f;
     public float dustSizeFactor = 300.0f;
@@ -147,6 +150,8 @@ public class Galaxy : MonoBehaviour {
         galaxyMaterial.SetFloat("ellipse_a", ellipseA);
         galaxyMaterial.SetFloat("ellipse_b", ellipseB);
         galaxyMaterial.SetFloat("ellipse_tilt", ellipseTilt);
+        galaxyMaterial.SetFloat("ellipse_disturbance_number", ellipseDisturbanceNumber);
+        galaxyMaterial.SetFloat("ellipse_disturbance_dumping_factor", ellipseDisturbanceDampingFactor);
         galaxyMaterial.SetFloat("particle_size_factor", particleSizeFactor);
         galaxyMaterial.SetFloat("star_size_factor", starSizeFactor);
         galaxyMaterial.SetFloat("dust_size_factor", dustSizeFactor);

@@ -18,6 +18,8 @@ uniform float far_field_factor;
 uniform float ellipse_a;
 uniform float ellipse_b;
 uniform float ellipse_tilt;
+uniform float ellipse_disturbance_number;
+uniform float ellipse_disturbance_dumping_factor;
 uniform float particle_size_factor;
 uniform float star_size_factor;
 uniform float dust_size_factor;
@@ -63,7 +65,15 @@ float2 calculate_star_position(const GalaxyParticle particle)
     const float t = particle.angular_position + calculate_orbital_velocity(particle.distance_to_center) * time;
     const float2 f1 = a * float2(cos(tilt_angle), sin(tilt_angle));
     const float2 f2 = b * float2(-sin(tilt_angle), cos(tilt_angle));
-    return f1 * cos(t) + f2 * sin(t);
+
+    float2 pos = f1 * cos(t) + f2 * sin(t);
+
+    if (ellipse_disturbance_number > 0.0f && ellipse_disturbance_dumping_factor > 0.0f)
+    {
+        pos += (a / ellipse_disturbance_dumping_factor) * float2(sin(t * ellipse_disturbance_number), cos(t * ellipse_disturbance_number));
+    }
+
+    return pos;
 }
 
 v2f vert(uint vertex_id : SV_VertexID, uint instance_id : SV_InstanceID)
