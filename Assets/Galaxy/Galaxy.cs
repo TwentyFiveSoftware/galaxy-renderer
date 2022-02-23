@@ -33,7 +33,9 @@ public class Galaxy : MonoBehaviour {
 
     public float dustTransparency = 0.05f;
     public float dustFilamentTransparency = 0.07f;
+
     public float dustTransparencyCurveFactor = 0.9f;
+    public float dustFilamentTransparencyCurveFactor = 0.9f;
 
     public float dustBaseKelvin = 4000.0f;
     public float dustKelvinExponent = 3.0f;
@@ -94,20 +96,19 @@ public class Galaxy : MonoBehaviour {
         }
 
         for (int i = 0; i < dustAmount; ++i) {
-            float distanceToCenter =
-                GalaxyParticleDistribution.SelectRandomValueBasedOnProbabilityDistribution(
-                    intensityProbabilityDistribution) * farFieldFactor * galaxyRadius;
-
-            float kelvin = Mathf.Min(20000.0f,
-                dustBaseKelvin * Mathf.Exp(distanceToCenter * distanceToCenter * dustKelvinExponent));
+            float distanceToCenter = Random.value * galaxyRadius;
 
             float yOffset = Random.value * yOffsetFactor;
+
+            Color color = Random.value < 0.5f
+                ? Color.Lerp(new Color(0.32f, 0.49f, 0.82f, 1.0f), new Color(0.05f, 0.10f, 0.39f, 1.0f), Random.value)
+                : Color.Lerp(new Color(0.34f, 0.23f, 0.67f, 1.0f), new Color(0.63f, 0.44f, 0.80f, 1.0f), Random.value);
 
             galaxyParticles[starAmount + i] = new GalaxyParticle {
                 angularPosition = Random.value * 360.0f * Mathf.Deg2Rad,
                 distanceToCenter = distanceToCenter,
                 size = 0.02f + Random.value * 0.15f,
-                color = StarTemperature.CalculateColorFromTemperature(kelvin),
+                color = new Vector4(color.r, color.g, color.b, 1),
                 yOffset = yOffset,
                 type = 1
             };
@@ -159,6 +160,7 @@ public class Galaxy : MonoBehaviour {
         galaxyMaterial.SetFloat("dust_transparency", dustTransparency);
         galaxyMaterial.SetFloat("dust_filament_transparency", dustFilamentTransparency);
         galaxyMaterial.SetFloat("dust_transparency_curve_factor", dustTransparencyCurveFactor);
+        galaxyMaterial.SetFloat("dust_filament_transparency_curve_factor", dustFilamentTransparencyCurveFactor);
         galaxyMaterial.SetFloat("velocity_factor", velocityFactor);
         galaxyMaterial.SetInt("use_constant_velocity", useConstantVelocity ? 1 : 0);
         galaxyMaterial.SetFloat("time", Time.time);

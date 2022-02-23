@@ -27,6 +27,7 @@ uniform float dust_filament_size_factor;
 uniform float dust_transparency;
 uniform float dust_filament_transparency;
 uniform float dust_transparency_curve_factor;
+uniform float dust_filament_transparency_curve_factor;
 uniform float velocity_factor;
 uniform int use_constant_velocity;
 
@@ -90,10 +91,15 @@ v2f vert(uint vertex_id : SV_VertexID, uint instance_id : SV_InstanceID)
 
 
     float alpha = 1.0f;
-    if (particle.type == 1 || particle.type == 2)
+    if (particle.type == 1)
     {
-        alpha = max(0.0f, (particle.type == 1 ? dust_transparency : dust_filament_transparency) *
+        alpha = max(0.0f, dust_transparency *
                     cos(UNITY_PI / (2.0f * dust_transparency_curve_factor * galaxy_radius) * particle.distance_to_center));
+    }
+    else if (particle.type == 2)
+    {
+        alpha = max(0.0f, dust_filament_transparency *
+                    cos(UNITY_PI / (2.0f * dust_filament_transparency_curve_factor * galaxy_radius) * particle.distance_to_center));
     }
 
     v2f o;
