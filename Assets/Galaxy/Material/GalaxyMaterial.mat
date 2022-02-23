@@ -73,12 +73,12 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - bulge_radius: 0.1
-    - ellipse_a: 0.64
-    - ellipse_b: 1.23
-    - ellipse_tilt: -9
-    - far_field_factor: 1
-    - galaxy_radius: 1
+    - bulge_radius: 0.25
+    - ellipse_a: 0.85
+    - ellipse_b: 1
+    - ellipse_tilt: -8
+    - far_field_factor: 2
+    - galaxy_radius: 1.2
     - star_size: 5
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

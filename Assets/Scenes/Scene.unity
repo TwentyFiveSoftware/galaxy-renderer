@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 337299178}
   - component: {fileID: 337299179}
   - component: {fileID: 337299185}
+  - component: {fileID: 337299187}
   - component: {fileID: 337299186}
   m_Layer: 0
   m_Name: Galaxy
@@ -155,7 +156,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &337299179
 MeshRenderer:
@@ -211,17 +212,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8b0993b75df41e6bbb6bb2f96f5daa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starAmount: 60000
-  dustAmount: 0
-  dustFilamentAmount: 0
+  starAmount: 50000
+  dustAmount: 50000
+  dustFilamentAmount: 50000
   galaxyMaterial: {fileID: 2100000, guid: c3c4e946a3672a14e86141a9b4871165, type: 2}
   generateGalaxyEveryFrame: 0
-  bulgeRadius: 0.1
-  galaxyRadius: 1
-  farFieldFactor: 1
-  ellipseA: 0.64
-  ellipseB: 1.23
-  ellipseTilt: -9
+  bulgeRadius: 0.25
+  galaxyRadius: 1.2
+  farFieldFactor: 2
+  yOffsetFactor: 0
+  ellipseA: 0.85
+  ellipseB: 1
+  ellipseTilt: -8
   particleSizeFactor: 1
   starSizeFactor: 3.5
   dustSizeFactor: 30
@@ -229,14 +231,13 @@ MonoBehaviour:
   largerStarFraction: 0.015
   dustTransparency: 0.07
   dustFilamentTransparency: 0.01
-  dustTransparencyOffset: 0.18
-  dustBulgeTransparency: 0.001
+  dustTransparencyCurveFactor: 0.92
   dustBaseKelvin: 4500
   dustKelvinExponent: 1.8
-  velocityFactor: 0
+  velocityFactor: 0.25
   useConstantVelocity: 0
-  maximumIntensity: 1
-  bulgeIntensity: 0.02
+  maximumIntensity: 70
+  bulgeIntensity: 7
   intensityCurveStart: 0
   intensityCurveEnd: 1
   intensityApproximationSteps: 1000
@@ -261,6 +262,7 @@ MonoBehaviour:
   bulgeRadius: 0.1
   galaxyRadius: 1
   farFieldFactor: 1
+  yOffsetFactor: 0.05
   ellipseA: 0.64
   ellipseB: 1.23
   ellipseTilt: -9
@@ -271,14 +273,55 @@ MonoBehaviour:
   largerStarFraction: 0.015
   dustTransparency: 0.07
   dustFilamentTransparency: 0.01
-  dustTransparencyOffset: 0.18
-  dustBulgeTransparency: 0.001
+  dustTransparencyCurveFactor: 0.9
   dustBaseKelvin: 4500
   dustKelvinExponent: 1.8
   velocityFactor: 0.25
   useConstantVelocity: 0
   maximumIntensity: 1
   bulgeIntensity: 0.02
+  intensityCurveStart: 0
+  intensityCurveEnd: 1
+  intensityApproximationSteps: 1000
+  intensityAccuracy: 100
+--- !u!114 &337299187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337299177}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b0993b75df41e6bbb6bb2f96f5daa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  starAmount: 50000
+  dustAmount: 50000
+  dustFilamentAmount: 50000
+  galaxyMaterial: {fileID: 2100000, guid: c3c4e946a3672a14e86141a9b4871165, type: 2}
+  generateGalaxyEveryFrame: 0
+  bulgeRadius: 0.5
+  galaxyRadius: 1.2
+  farFieldFactor: 1.2
+  yOffsetFactor: 0
+  ellipseA: 0.85
+  ellipseB: 1
+  ellipseTilt: -8
+  particleSizeFactor: 1
+  starSizeFactor: 3.5
+  dustSizeFactor: 30
+  dustFilamentSizeFactor: 200
+  largerStarFraction: 0.015
+  dustTransparency: 0.07
+  dustFilamentTransparency: 0.01
+  dustTransparencyCurveFactor: 0.9
+  dustBaseKelvin: 4500
+  dustKelvinExponent: 1.8
+  velocityFactor: 0.25
+  useConstantVelocity: 0
+  maximumIntensity: 1
+  bulgeIntensity: 2
   intensityCurveStart: 0
   intensityCurveEnd: 1
   intensityApproximationSteps: 1000
@@ -314,7 +357,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &344968958
 MonoBehaviour:

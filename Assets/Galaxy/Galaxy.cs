@@ -15,6 +15,8 @@ public class Galaxy : MonoBehaviour {
     public float galaxyRadius = 1.0f;
     public float farFieldFactor = 1.5f;
 
+    public float yOffsetFactor = 0.05f;
+
     public float ellipseA = 0.85f;
     public float ellipseB = 1.0f;
     public float ellipseTilt = -8.0f;
@@ -28,8 +30,7 @@ public class Galaxy : MonoBehaviour {
 
     public float dustTransparency = 0.05f;
     public float dustFilamentTransparency = 0.07f;
-    public float dustTransparencyOffset = 0.06f;
-    public float dustBulgeTransparency = 0.015f;
+    public float dustTransparencyCurveFactor = 0.9f;
 
     public float dustBaseKelvin = 4000.0f;
     public float dustKelvinExponent = 3.0f;
@@ -77,7 +78,7 @@ public class Galaxy : MonoBehaviour {
                     intensityProbabilityDistribution) * farFieldFactor * galaxyRadius;
 
             float size = 0.1f + Random.value * 0.4f;
-            float yOffset = Random.value * 0.05f;
+            float yOffset = Random.value * yOffsetFactor;
 
             galaxyParticles[i] = new GalaxyParticle {
                 angularPosition = Random.value * 360.0f * Mathf.Deg2Rad,
@@ -97,7 +98,7 @@ public class Galaxy : MonoBehaviour {
             float kelvin = Mathf.Min(20000.0f,
                 dustBaseKelvin * Mathf.Exp(distanceToCenter * distanceToCenter * dustKelvinExponent));
 
-            float yOffset = Random.value * 0.05f;
+            float yOffset = Random.value * yOffsetFactor;
 
             galaxyParticles[starAmount + i] = new GalaxyParticle {
                 angularPosition = Random.value * 360.0f * Mathf.Deg2Rad,
@@ -115,7 +116,7 @@ public class Galaxy : MonoBehaviour {
             float kelvin = Mathf.Min(20000.0f,
                 dustBaseKelvin * Mathf.Exp(distanceToCenter * distanceToCenter * dustKelvinExponent));
 
-            float yOffset = Random.value * 0.05f;
+            float yOffset = Random.value * yOffsetFactor;
 
             for (int j = 0; j < 100; j++) {
                 distanceToCenter = distanceToCenter - 0.05f + 0.1f * Random.value;
@@ -152,8 +153,7 @@ public class Galaxy : MonoBehaviour {
         galaxyMaterial.SetFloat("dust_filament_size_factor", dustFilamentSizeFactor);
         galaxyMaterial.SetFloat("dust_transparency", dustTransparency);
         galaxyMaterial.SetFloat("dust_filament_transparency", dustFilamentTransparency);
-        galaxyMaterial.SetFloat("dust_bulge_transparency", dustBulgeTransparency);
-        galaxyMaterial.SetFloat("dust_transparency_offset", dustTransparencyOffset);
+        galaxyMaterial.SetFloat("dust_transparency_curve_factor", dustTransparencyCurveFactor);
         galaxyMaterial.SetFloat("velocity_factor", velocityFactor);
         galaxyMaterial.SetInt("use_constant_velocity", useConstantVelocity ? 1 : 0);
         galaxyMaterial.SetFloat("time", Time.time);
