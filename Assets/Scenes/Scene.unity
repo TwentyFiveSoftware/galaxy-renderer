@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 337299178}
   - component: {fileID: 337299179}
+  - component: {fileID: 337299188}
   - component: {fileID: 337299185}
   - component: {fileID: 337299187}
   - component: {fileID: 337299186}
@@ -207,7 +208,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 337299177}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8b0993b75df41e6bbb6bb2f96f5daa8, type: 3}
   m_Name: 
@@ -331,6 +332,51 @@ MonoBehaviour:
   useConstantVelocity: 0
   maximumIntensity: 1
   bulgeIntensity: 2
+  intensityCurveStart: 0
+  intensityCurveEnd: 1
+  intensityApproximationSteps: 1000
+  intensityAccuracy: 100
+--- !u!114 &337299188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337299177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b0993b75df41e6bbb6bb2f96f5daa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  starAmount: 100000
+  dustAmount: 1000000
+  dustFilamentAmount: 1000000
+  galaxyMaterial: {fileID: 2100000, guid: c3c4e946a3672a14e86141a9b4871165, type: 2}
+  generateGalaxyEveryFrame: 0
+  bulgeRadius: 0.25
+  galaxyRadius: 1.2
+  farFieldFactor: 2
+  yOffsetFactor: 0.07
+  ellipseA: 0.85
+  ellipseB: 1
+  ellipseTilt: -8.5
+  ellipseDisturbanceNumber: 0
+  ellipseDisturbanceDampingFactor: 0
+  particleSizeFactor: 1
+  starSizeFactor: 1
+  dustSizeFactor: 50
+  dustFilamentSizeFactor: 50
+  largerStarFraction: 0.015
+  dustTransparency: 0.02
+  dustFilamentTransparency: 0.008
+  dustTransparencyCurveFactor: 0.65
+  dustFilamentTransparencyCurveFactor: 0.65
+  dustBaseKelvin: 4500
+  dustKelvinExponent: 1.8
+  velocityFactor: 0.25
+  useConstantVelocity: 0
+  maximumIntensity: 70
+  bulgeIntensity: 7
   intensityCurveStart: 0
   intensityCurveEnd: 1
   intensityApproximationSteps: 1000

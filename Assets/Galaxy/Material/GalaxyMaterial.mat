@@ -76,7 +76,7 @@ Material:
     - bulge_radius: 0.25
     - ellipse_a: 0.85
     - ellipse_b: 1
-    - ellipse_tilt: -8
+    - ellipse_tilt: -8.5
     - far_field_factor: 2
     - galaxy_radius: 1.2
     - star_size: 5
