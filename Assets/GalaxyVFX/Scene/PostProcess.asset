@@ -24,7 +24,7 @@ MonoBehaviour:
     m_Value: 1
   fixedExposure:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.1
   compensation:
     m_OverrideState: 0
     m_Value: 0
@@ -151,6 +151,34 @@ MonoBehaviour:
   proceduralSoftness:
     m_OverrideState: 0
     m_Value: 0.5
+--- !u!114 &-8221849053910569209
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8bcdf71d7fafa419fca1ed162f5fc9, type: 3}
+  m_Name: ColorAdjustments
+  m_EditorClassIdentifier: 
+  active: 1
+  postExposure:
+    m_OverrideState: 1
+    m_Value: -0.2
+  contrast:
+    m_OverrideState: 0
+    m_Value: 0
+  colorFilter:
+    m_OverrideState: 0
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  hueShift:
+    m_OverrideState: 0
+    m_Value: 0
+  saturation:
+    m_OverrideState: 0
+    m_Value: 0
 --- !u!114 &-6958855728281335876
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -209,7 +237,7 @@ MonoBehaviour:
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.59
+    m_Value: 0.555
   response:
     m_OverrideState: 0
     m_Value: 0.8
@@ -235,6 +263,7 @@ MonoBehaviour:
   - {fileID: -6358234146770234167}
   - {fileID: 2733234372988821568}
   - {fileID: 4113058752126098421}
+  - {fileID: -8221849053910569209}
 --- !u!114 &11782479920561992
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -256,10 +285,10 @@ MonoBehaviour:
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.75
+    m_Value: 0.806
   scatter:
     m_OverrideState: 1
-    m_Value: 0.6
+    m_Value: 0.721
   tint:
     m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
@@ -305,10 +334,10 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.3
+    m_Value: 0.47
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.3
+    m_Value: 0.226
   roundness:
     m_OverrideState: 0
     m_Value: 1
@@ -339,7 +368,7 @@ MonoBehaviour:
     m_Value: 3
   intensity:
     m_OverrideState: 1
-    m_Value: 4
+    m_Value: 460.43
   maximumVelocity:
     m_OverrideState: 0
     m_Value: 200

@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: SceneSettings
   m_EditorClassIdentifier: 
   components:
-  - {fileID: 114620464681705026}
   - {fileID: 114365372121065390}
   - {fileID: 114257510638711138}
 --- !u!114 &114257510638711138
@@ -61,13 +60,13 @@ MonoBehaviour:
     m_Value: 0
   top:
     m_OverrideState: 1
-    m_Value: {r: 0.13207549, g: 0, b: 0.053857703, a: 1}
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
   middle:
     m_OverrideState: 1
-    m_Value: {r: 0.103773594, g: 0.01679502, b: 0, a: 1}
+    m_Value: {r: 0.11320752, g: 0.0026699882, b: 0.037476983, a: 1}
   bottom:
     m_OverrideState: 1
-    m_Value: {r: 0.0073014796, g: 0, b: 0.103773594, a: 1}
+    m_Value: {r: 0, g: 0, b: 0.16037738, a: 1}
   gradientDiffusion:
     m_OverrideState: 1
     m_Value: 1.71
@@ -100,48 +99,5 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 100
   fogType:
-    m_OverrideState: 1
-    m_Value: 0
---- !u!114 &114620464681705026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ddcec8a8eb2d684d833ac8f5d26aebd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  active: 1
-  maxShadowDistance:
-    m_OverrideState: 1
-    m_Value: 500
-  directionalTransmissionMultiplier:
-    m_OverrideState: 0
-    m_Value: 1
-  cascadeShadowSplitCount:
-    m_OverrideState: 1
-    m_Value: 4
-  cascadeShadowSplit0:
-    m_OverrideState: 1
-    m_Value: 0.05
-  cascadeShadowSplit1:
-    m_OverrideState: 1
-    m_Value: 0.15
-  cascadeShadowSplit2:
-    m_OverrideState: 1
-    m_Value: 0.3
-  cascadeShadowBorder0:
-    m_OverrideState: 1
-    m_Value: 0
-  cascadeShadowBorder1:
-    m_OverrideState: 1
-    m_Value: 0
-  cascadeShadowBorder2:
-    m_OverrideState: 1
-    m_Value: 0
-  cascadeShadowBorder3:
     m_OverrideState: 1
     m_Value: 0
