@@ -1,10 +1,11 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
 public class Screenshot : MonoBehaviour {
 
     public void CaptureScreenshot() {
-        ScreenCapture.CaptureScreenshot("screenshot.png");
+        ScreenCapture.CaptureScreenshot("screenshot_" + DateTime.Now.ToFileTime() + ".png");
     }
 
 }
